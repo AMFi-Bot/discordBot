@@ -16,6 +16,7 @@ repositories {
 
 val jdaVersion = "5.0.0-beta.11"
 dependencies {
+    implementation("ch.qos.logback:logback-classic:1.2.9")
     implementation("net.dv8tion:JDA:$jdaVersion")
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
