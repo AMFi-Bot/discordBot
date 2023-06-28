@@ -1,15 +1,9 @@
+package org.amfibot.discord.bot
+
 import net.dv8tion.jda.api.JDABuilder
-import net.dv8tion.jda.api.events.session.ReadyEvent
-import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.requests.GatewayIntent
 
 
-class BaseListener : ListenerAdapter() {
-    override fun onReady(event: ReadyEvent) {
-        println("The bot is ready")
-    }
-
-}
 fun main() {
     val botToken = System.getenv("BOT_TOKEN")
 
@@ -20,5 +14,5 @@ fun main() {
         .build()
 
 
-    jda.addEventListener(BaseListener())
+    jda.addEventListener(toJDAEventListener(mainListenerChain.getEventListener()))
 }
