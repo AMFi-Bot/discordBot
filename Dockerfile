@@ -1,13 +1,17 @@
-FROM eclipse-temurin:17-jdk-alpine as build
+FROM gradle:8.1.1-jdk8-jammy as build
 
 WORKDIR /app
 
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
+COPY gradle gradle
+COPY gradlew .
+COPY build.gradle.kts .
+COPY gradle.properties .
+COPY settings.gradle.kts .
 COPY src src
 
-RUN --mount=type=cache,target=/root/.m2 ./mvnw package -DskipTests
-RUN cp target/*.jar /app.jar
+RUN --mount=type=cache,target=/root/.gradle gradle shadowJar --no-daemon
+RUN cp build/libs/*-all.jar /app.jar
 
+FROM gradle:8.1.1-jdk8-jammy as runnable
+COPY --from=build /app.jar /app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]

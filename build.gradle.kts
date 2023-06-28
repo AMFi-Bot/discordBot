@@ -1,8 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("jvm") version "1.8.21"
     application
+    java
 }
 
 group = "org.amfibot.discord"
@@ -27,6 +29,18 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+
 application {
-    mainClass.set("MainKt")
+    mainClass.set("org.amfibot.discord.bot.MainKt")
+}
+
+tasks.jar {
+    manifest {
+        attributes("Main-Class" to application.mainClass)
+    }
 }
