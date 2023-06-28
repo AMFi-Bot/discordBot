@@ -16,6 +16,7 @@ val jdaVersion = "5.0.0-beta.11"
 dependencies {
     implementation("net.dv8tion:JDA:$jdaVersion")
     testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 tasks.test {
