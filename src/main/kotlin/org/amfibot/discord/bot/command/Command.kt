@@ -1,5 +1,7 @@
 package org.amfibot.discord.bot.command
 
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
+
 /**
  * Defines the bot command class skeleton
  */
@@ -14,6 +16,11 @@ interface Command {
      */
     fun getDescription(): String
 
+    /**
+     * @return A command as a slash one
+     */
+    fun getAsSlashCommand(): SlashCommandData
+
 
     /**
      * Invokes the command
@@ -21,4 +28,6 @@ interface Command {
      * @return Command execution status
      */
     fun invoke(context: CommandContext): CommandStatus
+
+
 }
