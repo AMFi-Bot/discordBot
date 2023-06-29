@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory
 
 object SlashCommandListener: EventListener {
 
-    /**
-     * TODO: Not yet implemented
-     */
     override fun onEvent(event: GenericEvent): Boolean {
         if (event !is SlashCommandInteractionEvent) return false
 
