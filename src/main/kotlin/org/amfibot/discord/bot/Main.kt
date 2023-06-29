@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
 import org.amfibot.discord.bot.command.slash.clearSlashCommands
 import org.amfibot.discord.bot.command.slash.registerAllSlashCommands
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
     val botToken = System.getenv("BOT_TOKEN")
@@ -15,15 +16,17 @@ fun main(args: Array<String>) {
         .enableIntents(GatewayIntent.MESSAGE_CONTENT) // enables explicit access to message.getContentDisplay()
         .build()
 
-    return parseArgs(args, jda)
+    parseArgs(args, jda)
+
+    jda.addEventListener(toJDAEventListener(mainListenerChain.getEventListener()))
 }
 
 fun parseArgs(args: Array<String>, jda: JDA){
     if (args.contains("clear_slash_commands")){
-        return clearSlashCommands(jda)
+        clearSlashCommands(jda)
+        exitProcess(0)
     } else if (args.contains("register_slash_commands")) {
-        return registerAllSlashCommands(jda)
-    } else{
-        jda.addEventListener(toJDAEventListener(mainListenerChain.getEventListener()))
+        registerAllSlashCommands(jda)
+        exitProcess(0)
     }
 }
