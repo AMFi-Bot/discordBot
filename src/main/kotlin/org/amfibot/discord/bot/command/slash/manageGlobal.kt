@@ -8,7 +8,9 @@ import org.amfibot.discord.bot.command.commands
  */
 fun registerAllSlashCommands(jda: JDA) {
 
-    for ((_, command) in commands){
+    for ((_, command) in commands) {
+        if (command.slashCommandType != SlashCommandTypes.GLOBAL) continue
+
         val cmd =
             jda
                 .upsertCommand(
@@ -20,10 +22,10 @@ fun registerAllSlashCommands(jda: JDA) {
 }
 
 /**
- * Deletes all the slash commands registered globally
+ * Deletes all slash commands
  */
 fun clearSlashCommands(jda: JDA) {
-    for (cmd in jda.retrieveCommands().complete()){
+    for (cmd in jda.retrieveCommands().complete()) {
         println("Deleting a slash command with id ${cmd.id} and name ${cmd.name}")
         jda.deleteCommandById(cmd.id).complete()
     }

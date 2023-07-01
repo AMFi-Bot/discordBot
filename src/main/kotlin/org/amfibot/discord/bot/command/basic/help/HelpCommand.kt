@@ -7,9 +7,12 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 import org.amfibot.discord.bot.command.Command
 import org.amfibot.discord.bot.command.CommandContext
 import org.amfibot.discord.bot.command.CommandStatus
+import org.amfibot.discord.bot.command.slash.SlashCommandTypes
 import org.slf4j.LoggerFactory
 
-object HelpCommand: Command {
+object HelpCommand : Command {
+    override val slashCommandType: SlashCommandTypes = SlashCommandTypes.GLOBAL
+
     override fun getName(): String = "help"
 
     override fun getDescription(): String = "Lists the help of the bot usage"
@@ -19,7 +22,8 @@ object HelpCommand: Command {
         val event = context.event
 
         when (event) {
-            is MessageReceivedEvent -> LoggerFactory.getLogger(this::class.java).info("Help command executed as a message command")
+            is MessageReceivedEvent -> LoggerFactory.getLogger(this::class.java)
+                .info("Help command executed as a message command")
 
             is SlashCommandInteractionEvent -> {
                 LoggerFactory.getLogger(this::class.java).info("Help command executed as a slash command")
