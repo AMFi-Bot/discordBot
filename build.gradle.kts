@@ -18,6 +18,7 @@ val jdaVersion = "5.0.0-beta.11"
 dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.9")
     implementation("net.dv8tion:JDA:$jdaVersion")
+    implementation("com.rabbitmq:amqp-client:5.16.0")
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
