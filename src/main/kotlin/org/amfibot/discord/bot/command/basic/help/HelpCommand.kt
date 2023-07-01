@@ -12,10 +12,9 @@ import org.slf4j.LoggerFactory
 
 object HelpCommand : Command {
     override val slashCommandType: SlashCommandTypes = SlashCommandTypes.GLOBAL
+    override val name = "help"
 
-    override fun getName(): String = "help"
-
-    override fun getDescription(): String = "Lists the help of the bot usage"
+    private const val description = "Lists the help of the bot usage"
     override fun register(jda: JDA, guild: Guild?): net.dv8tion.jda.api.interactions.commands.Command? {
         return jda
             .upsertCommand(
@@ -24,7 +23,7 @@ object HelpCommand : Command {
             .complete()
     }
 
-    private fun getAsSlashCommand(): SlashCommandData = Commands.slash(getName(), getDescription())
+    private fun getAsSlashCommand(): SlashCommandData = Commands.slash(name, description)
 
     override fun invoke(event: SlashCommandInteractionEvent): CommandStatus {
 

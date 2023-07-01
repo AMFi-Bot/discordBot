@@ -11,17 +11,15 @@ import org.amfibot.discord.bot.guild.Guild
  */
 interface Command {
 
+    /**
+     * The name of the command
+     */
+    val name: String
+
+    /**
+     * The type of the command
+     */
     val slashCommandType: SlashCommandTypes
-
-    /**
-     * @return The name of the command
-     */
-    fun getName(): String
-
-    /**
-     * @return The description of the command
-     */
-    fun getDescription(): String
 
     /**
      * Registers the command
@@ -35,9 +33,8 @@ interface Command {
 
     /**
      * Invokes the command
+     *
      * @return Command execution status
      */
     fun invoke(event: SlashCommandInteractionEvent): CommandStatus
-
-
 }
