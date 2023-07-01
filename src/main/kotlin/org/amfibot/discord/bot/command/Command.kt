@@ -1,5 +1,6 @@
 package org.amfibot.discord.bot.command
 
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
 import org.amfibot.discord.bot.command.slash.SlashCommandTypes
 
@@ -28,10 +29,9 @@ interface Command {
 
     /**
      * Invokes the command
-     * @param context The command context
      * @return Command execution status
      */
-    fun invoke(context: CommandContext): CommandStatus
+    fun invoke(event: SlashCommandInteractionEvent): CommandStatus
 
 
 }
