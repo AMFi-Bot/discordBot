@@ -1,8 +1,10 @@
 package org.amfibot.discord.bot.command
 
+import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
-import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData
+import net.dv8tion.jda.api.interactions.commands.Command
 import org.amfibot.discord.bot.command.slash.SlashCommandTypes
+import org.amfibot.discord.bot.guild.Guild
 
 /**
  * Defines the bot command class skeleton
@@ -22,9 +24,13 @@ interface Command {
     fun getDescription(): String
 
     /**
-     * @return A command as a slash one
+     * Registers the command
+     *
+     * @param guild Bot guild, provided if the slash command registers locally
+     *
+     * @return registered command object
      */
-    fun getAsSlashCommand(): SlashCommandData
+    fun register(jda: JDA, guild: Guild? = null): Command?
 
 
     /**

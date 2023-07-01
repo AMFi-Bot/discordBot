@@ -11,12 +11,7 @@ fun registerAllSlashCommands(jda: JDA) {
     for ((_, command) in commands) {
         if (command.slashCommandType != SlashCommandTypes.GLOBAL) continue
 
-        val cmd =
-            jda
-                .upsertCommand(
-                    command.getAsSlashCommand()
-                )
-                .complete()
+        val cmd = command.register(jda) ?: continue
         println("Registered a slash command with name ${cmd.name} and id ${cmd.id}")
     }
 }
