@@ -25,11 +25,10 @@ object HelpCommand : Command {
 
     private fun getAsSlashCommand(): SlashCommandData = Commands.slash(name, description)
 
-    override fun invoke(event: SlashCommandInteractionEvent): CommandStatus {
+    override fun invoke(event: SlashCommandInteractionEvent, botGuild: Guild): CommandStatus {
 
         LoggerFactory.getLogger(this::class.java).info("Help command executed as a slash command")
-        event.reply("Welcome to the amfi bot!").queue()
-
+        event.reply("Welcome to the amfi bot! You are at the guild with id ${botGuild.id}").queue()
         return CommandStatus.OK
     }
 }

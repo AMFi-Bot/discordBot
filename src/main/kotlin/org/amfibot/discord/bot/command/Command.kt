@@ -29,12 +29,11 @@ interface Command {
      * @return registered command object
      */
     fun register(jda: JDA, guild: Guild? = null): Command?
-
-
+    
     /**
      * Invokes the command
      *
      * @return Command execution status
      */
-    fun invoke(event: SlashCommandInteractionEvent): CommandStatus
+    fun invoke(event: SlashCommandInteractionEvent, botGuild: Guild): CommandStatus
 }

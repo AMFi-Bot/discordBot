@@ -1,6 +1,7 @@
 package org.amfibot.discord.bot
 
 import net.dv8tion.jda.api.events.GenericEvent
+import org.amfibot.discord.bot.guild.Guild
 
 /**
  * Handles every event from the bot.
@@ -14,16 +15,15 @@ abstract class ListenerChain(private val listenerChain: Collection<EventListener
     /**
      * Processes the event through the chain
      */
-    abstract fun processEvent(event: GenericEvent): Boolean
-
+    abstract fun processEvent(event: GenericEvent, botGuild: Guild?): Boolean
 
     /**
      * @return Event listener instance of the ListenerChain that allows to implement
      * the Listener chain to the another listener chain or the JDA event listener chain
      */
     fun getEventListener(): EventListener {
-        return EventListener {event ->
-            processEvent(event)
+        return EventListener { event, botGuild ->
+            processEvent(event, botGuild)
         }
     }
 }
