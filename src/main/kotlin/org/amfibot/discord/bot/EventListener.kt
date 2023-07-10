@@ -1,8 +1,8 @@
 package org.amfibot.discord.bot
 
 import net.dv8tion.jda.api.events.GenericEvent
-import net.dv8tion.jda.api.events.guild.GenericGuildEvent
 import org.amfibot.discord.bot.exceptions.NoBotGuildException
+import org.amfibot.discord.bot.exceptions.StopEventProcessing
 import org.amfibot.discord.bot.guild.Guild
 import org.amfibot.discord.bot.guild.fetchBotGuild
 import net.dv8tion.jda.api.hooks.EventListener as JDAEventListener
@@ -29,13 +29,24 @@ fun interface EventListener {
  */
 fun toJDAEventListener(eventListener: EventListener): JDAEventListener {
     return JDAEventListener { event ->
-        if (event is GenericGuildEvent) {
-            val guildId = event.guild.id
+        val method = event.javaClass.methods.find { m -> m.name == "getGuild" }
 
-            val guild = fetchBotGuild(guildId)
 
-            eventListener.onEvent(event, guild)
-        } else
-            eventListener.onEvent(event, null)
+        val guild = method?.invoke(event) as net.dv8tion.jda.api.entities.Guild?
+
+        if (guild != null) {
+            try {
+                val botGuild = fetchBotGuild(guild.id)
+                eventListener.onEvent(event, botGuild)
+                return@JDAEventListener
+            } catch (_: StopEventProcessing) {
+                // If the exception has occurred do not process an event through the listener
+                return@JDAEventListener
+            }
+        }
+
+
+        eventListener.onEvent(event, null)
+        return@JDAEventListener
     }
 }

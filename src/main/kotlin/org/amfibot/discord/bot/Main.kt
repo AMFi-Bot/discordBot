@@ -8,12 +8,17 @@ import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
 import org.amfibot.discord.bot.command.slash.clearSlashCommands
 import org.amfibot.discord.bot.command.slash.registerAllSlashCommands
+import org.amfibot.discord.bot.guild.getAPIToken
+import org.amfibot.discord.bot.guild.getAPI_URL
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
-    val botToken =
-        System.getenv("BOT_TOKEN")
-            ?: throw Exception("BOT_TOKEN is undefined")
+    val botToken = getBotToken()
+
+    // Check the env variables to contain an api Token and url
+    getAPIToken()
+    getAPI_URL()
+
 
     val jda = JDABuilder.createDefault(botToken)
         .enableIntents(GatewayIntent.MESSAGE_CONTENT) // enables explicit access to message.getContentDisplay()
@@ -54,3 +59,5 @@ fun initRabbitConnection(): Connection {
 }
 
 fun initRabbitChannel(connection: Connection): Channel = connection.createChannel()
+
+fun getBotToken() = System.getenv("BOT_TOKEN") ?: throw Exception("BOT_TOKEN is undefined")
