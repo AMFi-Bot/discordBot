@@ -2,17 +2,11 @@ package org.amfibot.discord.bot.guild
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.amfibot.discord.bot.exceptions.StopEventProcessing
-import org.slf4j.LoggerFactory
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
 
-private val logger = LoggerFactory.getLogger("ApiFetchGuild")
-
-//
-//
-//private val apiHttpClient = HttpClient.newHttpClient()
 
 /**
  * Retrieves the bot guild
@@ -34,9 +28,6 @@ fun fetchBotGuildFromServer(guildId: String): Guild {
         .build()
 
     val response = HttpClient.newHttpClient().send(request, BodyHandlers.ofString())
-
-
-    logger.debug(response.body())
 
     when (response.statusCode()) {
         200 -> return jacksonObjectMapper().readValue(response.body(), Guild::class.java)
