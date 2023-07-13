@@ -10,7 +10,7 @@ import org.amfibot.discord.bot.guild.Guild
  * If the EventListener returns the true value, the listener chain stops to
  * process the event to next listeners.
  */
-abstract class ListenerChain(private val listenerChain: Collection<EventListener>) {
+abstract class ListenerChain {
 
     /**
      * Processes the event through the chain
