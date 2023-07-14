@@ -1,8 +1,5 @@
 package org.amfibot.discord.bot
 
-import com.rabbitmq.client.Channel
-import com.rabbitmq.client.Connection
-import com.rabbitmq.client.ConnectionFactory
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
@@ -39,25 +36,5 @@ fun parseArgs(args: Array<String>, jda: JDA) {
     }
 }
 
-
-fun initRabbitConnection(): Connection {
-    val factory = ConnectionFactory()
-    val host = System.getenv("RABBITMQ_HOST")
-        ?: throw Exception("RABBITMQ_HOST is undefined")
-
-    val username = System.getenv("RABBITMQ_DEFAULT_USER")
-        ?: throw Exception("RABBITMQ_DEFAULT_USER is undefined")
-
-    val password = System.getenv("RABBITMQ_DEFAULT_PASS")
-        ?: throw Exception("RABBITMQ_DEFAULT_PASS is undefined")
-
-    factory.host = host
-    factory.username = username
-    factory.password = password
-
-    return factory.newConnection()
-}
-
-fun initRabbitChannel(connection: Connection): Channel = connection.createChannel()
 
 fun getBotToken() = System.getenv("BOT_TOKEN") ?: throw Exception("BOT_TOKEN is undefined")
