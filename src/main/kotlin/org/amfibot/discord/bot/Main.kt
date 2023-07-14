@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
     // Check the env variables to contain an api Token and url
     getAPIToken()
     getAPI_URL()
+    getRedisCredentials()
 
 
     val jda = JDABuilder.createDefault(botToken)

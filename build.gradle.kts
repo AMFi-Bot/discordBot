@@ -21,6 +21,7 @@ dependencies {
     implementation("com.rabbitmq:amqp-client:5.16.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.+")
+    implementation("redis.clients:jedis:4.3.1+")
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     implementation(kotlin("reflect"))
