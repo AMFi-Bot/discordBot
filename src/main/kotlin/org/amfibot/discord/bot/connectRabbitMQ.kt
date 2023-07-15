@@ -23,3 +23,14 @@ fun initRabbitConnection(): Connection {
 }
 
 fun initRabbitChannel(connection: Connection): Channel = connection.createChannel()
+
+private var connection: Connection? = null
+
+fun getRabbitConnection(): Connection {
+    return if (connection != null) {
+        connection as Connection
+    } else {
+        connection = initRabbitConnection()
+        connection as Connection
+    }
+}

@@ -7,6 +7,7 @@ import org.amfibot.discord.bot.command.slash.clearSlashCommands
 import org.amfibot.discord.bot.command.slash.registerAllSlashCommands
 import org.amfibot.discord.bot.guild.getAPIToken
 import org.amfibot.discord.bot.guild.getAPI_URL
+import org.amfibot.discord.bot.listeners.rabbitmq.listenRabbitMQ
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
@@ -25,6 +26,9 @@ fun main(args: Array<String>) {
     parseArgs(args, jda)
 
     jda.addEventListener(toJDAEventListener(mainListenerChain.getEventListener()))
+
+    // listen to rabbitMQ
+    listenRabbitMQ(getRabbitConnection())
 }
 
 fun parseArgs(args: Array<String>, jda: JDA) {
