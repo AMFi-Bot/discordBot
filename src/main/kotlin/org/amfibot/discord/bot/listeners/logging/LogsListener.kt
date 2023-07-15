@@ -20,8 +20,7 @@ class LogsListener(
 
         for (listener in listenerChain) {
             if (
-                listener.eventClass == event.javaClass &&
-                botGuild.generalModule.log.types.contains(listener.logType)
+                listener.eventClass == event.javaClass
             ) {
 
                 listener.onEvent(event, botGuild)
