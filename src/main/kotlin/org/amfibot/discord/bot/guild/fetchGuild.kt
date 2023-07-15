@@ -10,6 +10,7 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 val jedis = getJedis()
 val logger: Logger = LoggerFactory.getLogger("FetchBotGuild")
@@ -61,7 +62,7 @@ fun getGuildFromCache(guildId: String): Guild? {
     } ?: return null
 
     // If the cache is expired return null and enforce cache update
-    if (cachedGuild.expiresAt < LocalDateTime.now())
+    if (cachedGuild.expiresAt < LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
         return null
 
 
