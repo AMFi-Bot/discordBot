@@ -20,10 +20,10 @@ fun listenToGuildUpdate(channel: Channel): String {
 
     channel.queueDeclare(queueName, false, false, false, null)
 
-    val consumeTag = channel.basicConsume(
+    val consumerTag = channel.basicConsume(
         queueName,
         true,
-        { consumerTag, message ->
+        { _, message ->
             val content = String(message.body, Charsets.UTF_8)
 
             // update cache
@@ -31,14 +31,14 @@ fun listenToGuildUpdate(channel: Channel): String {
 
             cacheGuild(guild)
         },
-        { consumerTag ->
+        { _ ->
 
         }
     )
 
-    logger.info("RabbitMQ Bot guild update event listener registered with consume tag $consumeTag")
+    logger.info("RabbitMQ Bot guild update event listener registered with the consumer tag $consumerTag")
 
-    return consumeTag
+    return consumerTag
 }
 
 /**
@@ -51,10 +51,10 @@ fun listenToGuildRegister(channel: Channel): String {
 
     channel.queueDeclare(queueName, false, false, false, null)
 
-    val consumeTag = channel.basicConsume(
+    val consumerTag = channel.basicConsume(
         queueName,
         true,
-        { consumerTag, message ->
+        { _, message ->
             val content = String(message.body, Charsets.UTF_8)
 
             // update cache
@@ -62,14 +62,14 @@ fun listenToGuildRegister(channel: Channel): String {
 
             cacheGuild(guild)
         },
-        { consumerTag ->
+        { _ ->
 
         }
     )
 
-    logger.info("RabbitMQ Bot guild update event listener registered with consume tag $consumeTag")
+    logger.info("RabbitMQ Bot guild update event listener registered with the consumer tag $consumerTag")
 
-    return consumeTag
+    return consumerTag
 }
 
 data class BotGuildEvents(
