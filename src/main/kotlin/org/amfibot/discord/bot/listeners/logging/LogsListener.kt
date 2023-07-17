@@ -16,7 +16,7 @@ class LogsListener(
     override fun processEvent(event: GenericEvent, botGuild: Guild?): Boolean {
         if (botGuild == null) return false
 
-        if (!botGuild.generalModule.log.enabled) return false
+        if (!botGuild.general.log.enabled) return false
 
         for (listener in listenerChain) {
             if (

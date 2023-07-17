@@ -10,10 +10,10 @@ object MessageCreate : LogsEventListener {
     override val loggerId: String = "message_create"
     override val eventClass: Class<MessageReceivedEvent> = MessageReceivedEvent::class.java
     override fun onEvent(event: GenericEvent, botGuild: Guild) {
-        val eventLogger = botGuild.generalModule.log.loggers.messageCreate
+        val eventLogger = botGuild.general.log.loggers.messageCreate
         if (
             event is MessageReceivedEvent &&
-            eventLogger != null &&
+            eventLogger.state &&
             event.author.id != event.jda.selfUser.id
         ) {
             val message =
