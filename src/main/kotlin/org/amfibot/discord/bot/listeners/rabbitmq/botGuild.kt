@@ -1,10 +1,10 @@
 package org.amfibot.discord.bot.listeners.rabbitmq
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.rabbitmq.client.Channel
 import org.amfibot.discord.bot.config.RabbitQueues
 import org.amfibot.discord.bot.guild.Guild
 import org.amfibot.discord.bot.guild.cacheGuild
+import org.amfibot.discord.bot.guild.guildMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -27,7 +27,7 @@ fun listenToGuildUpdate(channel: Channel): String {
             val content = String(message.body, Charsets.UTF_8)
 
             // update cache
-            val guild = jacksonObjectMapper().readValue(content, Guild::class.java)
+            val guild = guildMapper.readValue(content, Guild::class.java)
 
             cacheGuild(guild)
         },
@@ -58,7 +58,7 @@ fun listenToGuildRegister(channel: Channel): String {
             val content = String(message.body, Charsets.UTF_8)
 
             // update cache
-            val guild = jacksonObjectMapper().readValue(content, Guild::class.java)
+            val guild = guildMapper.readValue(content, Guild::class.java)
 
             cacheGuild(guild)
         },

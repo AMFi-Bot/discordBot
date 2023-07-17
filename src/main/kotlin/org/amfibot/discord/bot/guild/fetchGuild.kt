@@ -1,5 +1,7 @@
 package org.amfibot.discord.bot.guild
 
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.amfibot.discord.bot.exceptions.StopEventProcessing
 import org.amfibot.discord.bot.getJedis
@@ -36,7 +38,7 @@ fun cacheGuild(guildId: String, guild: Guild?) {
     val cachedGuild = CachedGuild(guild)
 
     // DSBGuild = discord bot guild
-    jedis.set("DSBGuild.$guildId", jacksonObjectMapper().writeValueAsString(cachedGuild))
+    jedis.set("DSBGuild.$guildId", guildMapper.writeValueAsString(cachedGuild))
 }
 
 fun cacheGuild(guild: Guild) = cacheGuild(guild.id, guild)
@@ -51,7 +53,7 @@ fun getGuildFromCache(guildId: String): Guild? {
 
 
     val cachedGuild = try {
-        jacksonObjectMapper().readValue(gs, CachedGuild::class.java)
+        guildMapper.readValue(gs, CachedGuild::class.java)
     } catch (e: Exception) {
         logger.error(
             "An exception occurred when parsing the cached guild object:" +
@@ -94,7 +96,7 @@ fun fetchBotGuildFromServer(guildId: String): Guild {
     val response = HttpClient.newHttpClient().send(request, BodyHandlers.ofString())
 
     when (response.statusCode()) {
-        200 -> return jacksonObjectMapper().readValue(response.body(), Guild::class.java)
+        200 -> return guildMapper.readValue(response.body(), Guild::class.java)
 
         404 -> throw GuildNotRegisteredException()
 
@@ -123,3 +125,6 @@ fun getAPI_URL() =
  */
 fun getAPIToken() =
     System.getenv("BOT_API_TOKEN") ?: throw Exception("BOT_API_TOKEN is undefined")
+
+val guildMapper: ObjectMapper = jacksonObjectMapper()
+    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
