@@ -8,7 +8,8 @@ import org.amfibot.discord.bot.guild.modules.general.logging.Logger
  *
  */
 class MessageCreate(
-    override val loggingChannel: String
+    override val state: Boolean = false,
+    override val loggingChannel: String? = null
 ) : Logger {
     @JsonProperty("id")
     override fun getLoggerId(): String = "message_create"

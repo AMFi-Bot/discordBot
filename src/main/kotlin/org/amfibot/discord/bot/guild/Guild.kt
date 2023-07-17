@@ -5,4 +5,4 @@ import org.amfibot.discord.bot.guild.modules.general.GeneralModule
 /**
  * Discord guild instance
  */
-data class Guild(val id: String, val generalModule: GeneralModule = GeneralModule())
+data class Guild(val id: String, val general: GeneralModule = GeneralModule())
